@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const englishEls     = document.querySelectorAll('.en');
     const hindiEls       = document.querySelectorAll('.hi');
 
-    if (!toggleBtn) return; // Page might not have the toggle; bail safely
-
+    if (!toggleBtn) return; 
     let isHindi = false;
 
     function applyLanguage() {
