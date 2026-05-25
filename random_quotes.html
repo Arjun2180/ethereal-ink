@@ -137,12 +137,6 @@
   <a href="index.html" class="home-link">← Back to Ethereal Ink</a>
 
   <script>
-    // Each quote is split into text + author so we can display them separately.
-    // HOW THE FADE WORKS:
-    //   1. Add the "fading" class → CSS transition drops opacity to 0 over 300ms.
-    //   2. After 300ms the text has faded; we swap in the new content.
-    //   3. Remove "fading" → opacity transitions back to 1.
-    // This avoids the jarring "blink" of the original version.
 
     const quotes = [
       { text: "The best way to predict the future is to create it.", author: "Peter Drucker" },
@@ -160,7 +154,6 @@
     let lastIndex = -1;
 
     function getNextQuote() {
-      // Pick a random quote that is different from the last one shown.
       let index;
       do { index = Math.floor(Math.random() * quotes.length); }
       while (index === lastIndex && quotes.length > 1);
