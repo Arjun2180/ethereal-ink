@@ -12,4 +12,4 @@ A literary community web app for sharing poetry, prose, and quotes.
 HTML · CSS · Vanilla JavaScript
 
 ## Live Demo
-[Link here if you deploy it]
+https://arjun2180.github.io/ethereal-ink
