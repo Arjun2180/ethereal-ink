@@ -62,8 +62,6 @@ function createTile(post, prepend = false) {
         likes += liked ? 1 : -1;
         likeCount.textContent = likes;
         likeBtn.classList.toggle('liked', liked);
-
-        // Persist: update only the matching post (by unique id, not content string)
         const tiles = loadTiles().map(t => t.id === post.id ? { ...t, likes } : t);
         saveTiles(tiles);
     });
