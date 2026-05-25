@@ -1,52 +1,3 @@
-// ─────────────────────────────────────────────
-//  Ethereal Ink – Community Posts (script.js)
-// ─────────────────────────────────────────────
-//
-// HOW IT WORKS (plain English):
-//
-// 1. STORAGE KEY
-//    All posts are saved in the browser's localStorage under the key "ei_tiles".
-//    localStorage is like a mini database that lives in your browser and survives
-//    page refreshes. Each post is an object: { id, content, likes, timestamp }.
-//
-// 2. LOADING ON PAGE START  (DOMContentLoaded)
-//    When the page finishes loading we read the saved posts from localStorage and
-//    render each one by calling createTile(). If there are no saved posts we show
-//    an "empty state" message instead.
-//
-// 3. POSTING  (addButton click)
-//    When the user clicks Post we:
-//    a) Read the textarea value and bail if it's empty / only spaces.
-//    b) Build a new post object with a unique id (Date.now()), the content,
-//       0 likes, and the current timestamp.
-//    c) Add it to the saved array and write the updated array back to localStorage.
-//    d) Call createTile() to insert it at the TOP of the grid (prepend).
-//    e) Clear the textarea and reset its height.
-//
-// 4. LIKING  (like button click inside each tile)
-//    Likes live inside the post object in localStorage. When a like button is
-//    clicked we toggle a "liked" state (one like per session – tracked by a local
-//    variable on the button via closure). The count is updated in the DOM and
-//    written back to localStorage.
-//    NOTE: Previously the code matched posts by content string, which breaks if two
-//    posts have identical text. We now use a unique numeric id instead.
-//
-// 5. DELETING  (✕ button inside each tile)
-//    Clicking the delete button removes the post from localStorage and fades the
-//    tile out of the DOM – no page reload needed.
-//
-// 6. TEXTAREA AUTO-RESIZE
-//    The textarea grows as you type by setting its height to its scrollHeight.
-//    A character counter also updates live so users can gauge post length.
-//
-// 7. createTile(post, prepend)
-//    A pure helper that builds a tile DOM node and optionally prepends vs appends.
-//
-// 8. saveTiles(array) / loadTiles()
-//    Two tiny wrappers around localStorage so the serialization logic lives in
-//    one place. If localStorage throws (e.g. private browsing quota) we degrade
-//    gracefully without crashing.
-
 const STORAGE_KEY = 'ei_tiles';
 
 function loadTiles() {
@@ -66,7 +17,6 @@ function saveTiles(tiles) {
 }
 
 function formatTime(ts) {
-    // Turns a Unix timestamp into a friendly "just now / 5m ago / Mar 12" label
     const diff = Date.now() - ts;
     const m = Math.floor(diff / 60000);
     if (m < 1)  return 'just now';
@@ -84,9 +34,6 @@ function createTile(post, prepend = false) {
     const tile = document.createElement('div');
     tile.className = 'tile';
     tile.dataset.id = post.id;
-
-    // We use a closure variable `liked` and `likes` so each tile's like button
-    // tracks its own state independently without hitting localStorage on every render.
     let likes = post.likes;
     let liked = false;
 
@@ -152,7 +99,6 @@ function showEmpty(container) {
 }
 
 function escapeHTML(str) {
-    // Prevents XSS: turns < > & into safe HTML entities before injecting into DOM
     return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
@@ -166,8 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         tiles.forEach(tile => createTile(tile));
     }
-
-    // Textarea auto-resize + character counter
     const textarea  = document.getElementById('userInput');
     const charCount = document.getElementById('charCount');
 
@@ -186,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const post = {
-            id: Date.now(),         // unique numeric id – avoids the duplicate-content bug
+            id: Date.now(),         
             content,
             likes: 0,
             timestamp: Date.now()
@@ -196,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         stored.push(post);
         saveTiles(stored);
 
-        createTile(post, true);    // prepend = true → newest post appears at the top
+        createTile(post, true);    
 
         textarea.value = '';
         textarea.style.height = 'auto';
