@@ -58,7 +58,7 @@ nav {
   width: 36px;
   height: 36px;
   object-fit: contain;
-  mix-blend-mode: multiply; /* makes the white background invisible on light surfaces */
+  mix-blend-mode: multiply; 
 }
 
 .logo .title {
