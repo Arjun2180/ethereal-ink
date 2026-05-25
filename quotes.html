@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Famous Quotes – Ethereal Ink</title>
+  <link rel="stylesheet" href="style_quotes.css">
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html">
+      <img src="Lightmode.png" alt="Ethereal Ink logo">
+      <span class="title">Ethereal Ink</span>
+    </a>
+    <div class="right">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="quotes.html" class="active">Famous Quotes</a></li>
+        <li><a href="random_quotes.html" target="_blank">Random Quotes</a></li>
+        <li><a href="about.html" target="_blank">About Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="quotes-header">
+    <h1>Words that <em>shaped the world</em></h1>
+    <p>A curated collection of timeless quotes from great minds.</p>
+  </header>
+
+  <div class="filter-bar">
+    <button class="filter-pill active" data-filter="all">All</button>
+    <button class="filter-pill" data-filter="Motivation">Motivation</button>
+    <button class="filter-pill" data-filter="Philosophy">Philosophy</button>
+    <button class="filter-pill" data-filter="Perspective">Perspective</button>
+    <button class="filter-pill" data-filter="Dreams">Dreams</button>
+  </div>
+
+  <div class="boss" id="quoteGrid">
+
+    <div class="card" data-tags="Motivation Philosophy Thoughts">
+      <div class="image"><img src="./images/Buddha.png" alt="Buddha"></div>
+      <div class="card-body">
+        <div class="capsules"><span>Motivation</span><span>Philosophy</span><span>Thoughts</span></div>
+        <div class="head"><h2>Buddha</h2></div>
+        <div class="content">
+          <p class="one">"All that we are is the result of what we have thought."</p>
+          <p class="two">"Do not dwell in the past; do not dream of the future, concentrate the mind on the present moment."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-tags="Motivation Dreams Thoughts">
+      <div class="image"><img src="./images/Dr. apj.webp" alt="Dr. A.P.J Abdul Kalam"></div>
+      <div class="card-body">
+        <div class="capsules"><span>Motivation</span><span>Dreams</span><span>Thoughts</span></div>
+        <div class="head"><h2>Dr. A.P.J Abdul Kalam</h2></div>
+        <div class="content">
+          <p class="one">"Small aim is a crime, have great aim."</p>
+          <p class="two">"Thinking should become your capital asset no matter whatever ups and downs you come across in your life."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-tags="Motivation Philosophy Thoughts">
+      <div class="image"><img src="./images/Steve.jpeg" alt="Steve Jobs"></div>
+      <div class="card-body">
+        <div class="capsules"><span>Motivation</span><span>Philosophy</span><span>Thoughts</span></div>
+        <div class="head"><h2>Steve Jobs</h2></div>
+        <div class="content">
+          <p class="one">"We're here to put a dent in the universe. Otherwise why else even be here?"</p>
+          <p class="two">"Don't let the noise of other's opinions drown out your own inner voice."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-tags="Perspective Advice Thoughts">
+      <div class="image"><img src="./images/Einstein.jpeg" alt="Albert Einstein"></div>
+      <div class="card-body">
+        <div class="capsules"><span>Perspective</span><span>Advice</span><span>Thoughts</span></div>
+        <div class="head"><h2>Albert Einstein</h2></div>
+        <div class="content">
+          <p class="one">"Stay away from negative people. They have a problem for every solution."</p>
+          <p class="two">"Everybody is a genius. But if you judge a fish by its ability to climb a tree, it will live its whole life believing that it is stupid."</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Filter pills – show/hide cards by tag
+    // Clicking a pill adds the "active" class to it and removes it from all others.
+    // Then we loop over every card and check if its data-tags attribute contains
+    // the selected filter. If it does (or "all" is selected) we show the card;
+    // otherwise we hide it with display:none.
+    const pills = document.querySelectorAll('.filter-pill');
+    const cards = document.querySelectorAll('.card');
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        const filter = pill.dataset.filter;
+        cards.forEach(card => {
+          const tags = card.dataset.tags || '';
+          card.style.display = (filter === 'all' || tags.includes(filter)) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

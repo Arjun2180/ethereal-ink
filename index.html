@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethereal Ink – Community</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html">
+      <img src="Lightmode.png" alt="Ethereal Ink logo">
+      <span class="title">Ethereal Ink</span>
+    </a>
+    <div class="right">
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="quotes.html">Famous Quotes</a></li>
+        <li><a href="random_quotes.html" target="_blank">Random Quotes</a></li>
+        <li><a href="about.html" target="_blank">About Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <h1>A place for your<br><em>words & thoughts</em></h1>
+    <p>Share your poems, prose, and reflections with the community.</p>
+  </header>
+
+  <main>
+    <div class="composer">
+      <div class="composer-box">
+        <textarea
+          id="userInput"
+          placeholder="Write a poem, a thought, a line you love…"
+          rows="3"
+          aria-label="Compose your post"
+        ></textarea>
+        <div class="composer-actions">
+          <span class="char-count" id="charCount">0 chars</span>
+          <button class="btn btn-primary" id="addButton">Post</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="tiles-section" aria-label="Community posts">
+      <p class="tiles-label">From the community</p>
+      <div class="tiles-container" id="tilesContainer"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

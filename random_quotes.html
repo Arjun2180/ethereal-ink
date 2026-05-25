@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Quotes – Ethereal Ink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0e0e10;
+      --ink-soft: #4a4a55;
+      --ink-muted: #9898a3;
+      --surface: #faf9f7;
+      --accent: #2a6b5c;
+      --accent-light: #d6ede8;
+      --border: rgba(14,14,16,0.1);
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--surface);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      max-width: 520px;
+      width: 100%;
+      padding: 48px 44px 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    .quote-mark {
+      font-family: var(--serif);
+      font-size: 72px;
+      line-height: 0.6;
+      color: var(--accent-light);
+      user-select: none;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    #quoteText {
+      font-family: var(--serif);
+      font-size: clamp(18px, 3vw, 24px);
+      line-height: 1.5;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      min-height: 80px;
+      transition: opacity 0.3s ease;
+    }
+
+    #quoteText.fading { opacity: 0; }
+
+    #quoteAuthor {
+      margin-top: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      min-height: 20px;
+      transition: opacity 0.3s ease;
+    }
+
+    #quoteAuthor.fading { opacity: 0; }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--accent-light);
+      margin: 24px auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 28px;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn:hover { background: #1f5446; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn svg { width: 16px; height: 16px; }
+
+    .home-link {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .home-link:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <span class="quote-mark" aria-hidden="true">"</span>
+    <p id="quoteText">Click the button for a quote that might just change your day.</p>
+    <p id="quoteAuthor"></p>
+    <div class="divider"></div>
+    <button class="btn" id="quoteButton">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13.5 8A5.5 5.5 0 1 1 8 2.5M13.5 2.5v3.5H10"/>
+      </svg>
+      New quote
+    </button>
+  </div>
+
+  <a href="index.html" class="home-link">← Back to Ethereal Ink</a>
+
+  <script>
+    // Each quote is split into text + author so we can display them separately.
+    // HOW THE FADE WORKS:
+    //   1. Add the "fading" class → CSS transition drops opacity to 0 over 300ms.
+    //   2. After 300ms the text has faded; we swap in the new content.
+    //   3. Remove "fading" → opacity transitions back to 1.
+    // This avoids the jarring "blink" of the original version.
+
+    const quotes = [
+      { text: "The best way to predict the future is to create it.", author: "Peter Drucker" },
+      { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+      { text: "The purpose of our lives is to be happy.", author: "Dalai Lama" },
+      { text: "Get busy living or get busy dying.", author: "Stephen King" },
+      { text: "You have within you right now, everything you need to deal with whatever the world can throw at you.", author: "Brian Tracy" },
+      { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+      { text: "The only impossible journey is the one you never begin.", author: "Tony Robbins" },
+      { text: "Act as if what you do makes a difference. It does.", author: "William James" },
+      { text: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein" },
+      { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+    ];
+
+    let lastIndex = -1;
+
+    function getNextQuote() {
+      // Pick a random quote that is different from the last one shown.
+      let index;
+      do { index = Math.floor(Math.random() * quotes.length); }
+      while (index === lastIndex && quotes.length > 1);
+      lastIndex = index;
+      return quotes[index];
+    }
+
+    const textEl   = document.getElementById('quoteText');
+    const authorEl = document.getElementById('quoteAuthor');
+    const btn      = document.getElementById('quoteButton');
+
+    btn.addEventListener('click', () => {
+      textEl.classList.add('fading');
+      authorEl.classList.add('fading');
+
+      setTimeout(() => {
+        const q = getNextQuote();
+        textEl.textContent   = q.text;
+        authorEl.textContent = q.author ? `— ${q.author}` : '';
+        textEl.classList.remove('fading');
+        authorEl.classList.remove('fading');
+      }, 300);
+    });
+  </script>
+
+</body>
+</html>
