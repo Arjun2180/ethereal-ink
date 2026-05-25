@@ -40,7 +40,7 @@ nav {
   width: 36px;
   height: 36px;
   object-fit: contain;
-  mix-blend-mode: multiply; /* makes the white background invisible on light surfaces */
+  mix-blend-mode: multiply; 
 }
 .logo .title { font-family: var(--serif); font-size: 22px; color: var(--ink); }
 
